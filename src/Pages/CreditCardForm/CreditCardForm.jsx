@@ -6,13 +6,13 @@ import * as z from "zod";
 import AppInput from "../../Components/AppInput/AppInput";
 
 const schema = z.object({
-    cardNumber: z.number(),
+    cardNumber: z.string().length(19 ,{ message: "Must be exactly 5 characters long" }),
     cardHolder: z.string(),
-    cardExpire: z.string(),
-    cardCvc: z.number(),
+    cardExpire: z.string().length(5),
+    cardCvc: z.string(),
 });
 
-export default function CreditCardForm() {
+export function CreditCardForm() {
 
     const {
         reset,
@@ -27,7 +27,7 @@ export default function CreditCardForm() {
         cardNumber: "",
         cardHolder: "",
         cardExpire: "",
-        cardCvc: "",
+        cardCvc: null,
     });
 
     function onSubmit(data) {
@@ -64,20 +64,6 @@ export default function CreditCardForm() {
                         />
                     )}
                 />
-
-                {/*<Controller*/}
-                {/*    name="cardNumber"*/}
-                {/*    control={control}*/}
-                {/*    render={({field}) => (*/}
-                {/*        <input className="border border-gray-400 py-1 px-5 m-1 w-[400px]"*/}
-                {/*               type="text"*/}
-                {/*               placeholder="0000-0000-0000-0000"*/}
-                {/*               {...field}*/}
-                {/*        />*/}
-                {/*    )}*/}
-                {/*/>*/}
-                {/*{errors?.cardNumber &&*/}
-                {/*    (<span className="ml-2 text-xs text-red-500"> {errors?.cardNumber.message} </span>)}*/}
 
                 <Controller
                     name="cardHolder"

@@ -1,6 +1,6 @@
 import {useForm} from "react-hook-form";
 
-export default function SimpleForm() {
+export function SimpleForm() {
 
   const {register, reset, handleSubmit, formState: {errors}} = useForm( {mode:"onChange"})
 
@@ -13,7 +13,7 @@ export default function SimpleForm() {
     <div>
       <h1 className="font-bold text-3xl pb-2">Simple Form</h1>
 
-      <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col w-[400px]" onSubmit={handleSubmit(onSubmit)}>
 
         <input className="border border-gray-400 py-1 px-5 m-1 w-[400px]"
                type="text"

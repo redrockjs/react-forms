@@ -1,0 +1,23 @@
+.mainHeader {
+  @apply font-bold text-3xl pb-2
+}
+
+.mainForm {
+  @apply flex flex-col w-[400px]
+}
+
+.mainInput {
+  @apply border border-gray-400 py-1 px-5 m-1 w-full
+}
+
+.mainInputError {
+  @apply ml-2 text-xs text-red-500
+}
+
+.mainButton {
+  @apply border border-gray-400 py-1 px-5 m-1 w-full
+}
+
+.mainSelect{
+  @apply border border-gray-400 py-1 px-5 m-1 w-full
+}

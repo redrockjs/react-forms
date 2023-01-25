@@ -1,7 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Header from "./Components/Header/Header";
-import SimpleForm from "./Pages/SimpleForm/SimpleForm";
-import CreditCardForm from "./Pages/CreditCardForm/CreditCardForm";
+import {CreditCardForm, DynamicForm, FilesForm, SimpleForm} from "./Pages";
 
 function App() {
   return (
@@ -11,6 +10,8 @@ function App() {
         <Routes>
           <Route path="/" element={<SimpleForm/>}/>
           <Route path="/credit-card" element={<CreditCardForm/>}/>
+          <Route path="/dynamic-form" element={<DynamicForm/>}/>
+          <Route path="/files-form" element={<FilesForm/>}/>
         </Routes>
       </BrowserRouter>
     </div>
