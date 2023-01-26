@@ -1,68 +1,69 @@
 import s from "./styles.module.scss";
-import {useForm, useWatch} from "react-hook-form";
-import {useState} from "react";
-import {getValue} from "@testing-library/user-event/dist/utils";
+import {useForm} from "react-hook-form";
+import {forwardRef, useEffect, useState} from "react";
 
 export function AdvancedFilesForm() {
 
-  const {register, control, handleSubmit, setValue, getValues} = useForm()
+  const {handleSubmit, setValue} = useForm()
 
   const onSubmit = (data) => {
     console.log(data)
   }
 
-  const files = useWatch({control, name: 'files'})
+  const AppInputFiles = forwardRef((props, ref) => {
 
-  const AppInputFiles = () => {
+      const [fileList, setFilelist] = useState([])
 
-    const [fileList, setFilelist] = useState([])
+      useEffect(() => {
+        setValue('files',fileList)
+      }, [fileList])
 
-    const getFileArray = (fileListData) => Array.from(fileListData)
-
-    const handleAddFile = (e) => {
-      const arrFiles = getFileArray(e.target.files)
-
-      const result = fileList.concat(arrFiles).reduce((sum, current) => {
-        if (!sum.find(file => file.name === current.name)) {
-          sum.push(current);
-        }
-        return sum;
-      }, []);
-
-      setFilelist(result)
-    }
-
-    const handleRemoveFile = (id) => {
-      const newList = fileList.filter((_, idx) => idx !== id)
-      setFilelist(newList)
-    }
-
-    const handleClickMe = () => {
-      console.log('list', fileList)
-    }
-
-    return (
-      <div>
-
-        <button className={s.filesButton} onClick={handleClickMe}> Click me</button>
-
-        <input type="file" multiple onChange={handleAddFile}/>
-
-        <ul>
-          {fileList &&
-            fileList.map((file, idx) => {
-              return <li key={idx}>
-                <span className="text-red-500 pr-1 cursor-pointer" onClick={() => handleRemoveFile(idx)}>X</span>
-                <span>{file.name}</span>
-              </li>
-            })
+      const handleAddFile = (e) => {
+        const arrFiles = Array.from(e.target.files)
+        const result = fileList.concat(arrFiles).reduce((sum, current) => {
+          if (!sum.find(file => file.name === current.name)) {
+            sum.push(current);
           }
-        </ul>
+          return sum;
+        }, []);
+        setFilelist(result)
+      }
 
+      const handleRemoveFile = (id) => {
+        const newList = fileList.filter((_, idx) => idx !== id)
+        setFilelist(newList)
+      }
 
-      </div>
-    )
-  }
+      const handleClickMe = () => {
+        console.log('list', fileList)
+      }
+
+      return (
+        <>
+          <div className="flex flex-row">
+            <div className="min-w-[120px]">
+              <label className={s.filesButton}>
+                Add file
+                <input className="hidden" type="file" multiple onChange={handleAddFile} ref={ref}/>
+              </label>
+            </div>
+            <div>
+              <ul>
+                {fileList &&
+                  fileList.map((file, idx) => {
+                    return <li key={idx}>
+                      <span className="text-red-500 pr-1 cursor-pointer" onClick={() => handleRemoveFile(idx)}>X</span>
+                      <span>{file.name}</span>
+                    </li>
+                  })
+                }
+              </ul>
+            </div>
+          </div>
+        </>
+      )
+    }
+  )
 
   return <>
     <div>
@@ -71,7 +72,7 @@ export function AdvancedFilesForm() {
 
       <form className={s.filesForm} onSubmit={handleSubmit(onSubmit)}>
 
-        <AppInputFiles/>
+        <AppInputFiles name={'files'}/>
 
         <button className={s.filesButton} type={'submit'}>
           Send
