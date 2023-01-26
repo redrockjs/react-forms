@@ -21,6 +21,10 @@ export default function Header() {
           <li className="cursor-pointer px-1 text-blue-900">
             <Link to="/files-form">Files Form</Link>
           </li>
+          |
+          <li className="cursor-pointer px-1 text-blue-900">
+            <Link to="/advanced-files-form">Advanced Files Form</Link>
+          </li>
         </ul>
       </nav>
       <div>Forms</div>
