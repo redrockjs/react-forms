@@ -15,7 +15,7 @@ export function AdvancedFilesForm() {
       const [fileList, setFilelist] = useState([])
 
       useEffect(() => {
-        setValue('files',fileList)
+        setValue('files', Object.assign({},fileList))
       }, [fileList])
 
       const handleAddFile = (e) => {
@@ -32,10 +32,6 @@ export function AdvancedFilesForm() {
       const handleRemoveFile = (id) => {
         const newList = fileList.filter((_, idx) => idx !== id)
         setFilelist(newList)
-      }
-
-      const handleClickMe = () => {
-        console.log('list', fileList)
       }
 
       return (
