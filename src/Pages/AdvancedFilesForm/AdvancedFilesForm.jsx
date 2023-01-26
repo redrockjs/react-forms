@@ -7,50 +7,58 @@ export function AdvancedFilesForm() {
 
   const {register, control, handleSubmit, setValue, getValues} = useForm()
 
-  const [fileList, setFilesList] = useState('')
-
   const onSubmit = (data) => {
-    //console.log(data)
+    console.log(data)
   }
 
   const files = useWatch({control, name: 'files'})
 
-  files && console.log('files', JSON.stringify(files))
-
-
   const AppInputFiles = () => {
 
-    const [fileList,setFilelist] =useState()
+    const [fileList, setFilelist] = useState([])
 
-    const getFileArray = (fileList) => Array.from(fileList)
-
-    const dt = new DataTransfer();
+    const getFileArray = (fileListData) => Array.from(fileListData)
 
     const handleAddFile = (e) => {
-
       const arrFiles = getFileArray(e.target.files)
 
-      arrFiles.forEach((file) => dt.items.add(file))
+      const result = fileList.concat(arrFiles).reduce((sum, current) => {
+        if (!sum.find(file => file.name === current.name)) {
+          sum.push(current);
+        }
+        return sum;
+      }, []);
 
-      console.log('list', dt.files)
+      setFilelist(result)
+    }
+
+    const handleRemoveFile = (id) => {
+      const newList = fileList.filter((_, idx) => idx !== id)
+      setFilelist(newList)
     }
 
     const handleClickMe = () => {
-      console.log('list', dt.files)
+      console.log('list', fileList)
     }
 
     return (
       <div>
+
+        <button className={s.filesButton} onClick={handleClickMe}> Click me</button>
+
         <input type="file" multiple onChange={handleAddFile}/>
 
         <ul>
-        { dt.files &&
-            Array.from(dt.files).map(file=>{
-            return <li>file.name</li>
-          })
-        }
+          {fileList &&
+            fileList.map((file, idx) => {
+              return <li key={idx}>
+                <span className="text-red-500 pr-1 cursor-pointer" onClick={() => handleRemoveFile(idx)}>X</span>
+                <span>{file.name}</span>
+              </li>
+            })
+          }
         </ul>
-        <button className={s.filesButton} onClick={handleClickMe}> Click me</button>
+
 
       </div>
     )
