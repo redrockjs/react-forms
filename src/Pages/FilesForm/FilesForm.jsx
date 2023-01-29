@@ -6,7 +6,9 @@ export function FilesForm() {
   const {register, control, handleSubmit} = useForm()
 
   const onSubmit = (data) => {
-    console.log(data)
+    //console.log(data)
+    console.log(data.file[0].name)
+    console.log(Array.from(data.files).map(file=>file.name))
   }
 
   const file = useWatch({control, name: 'file'})
